@@ -1,9 +1,12 @@
-import { Menu} from "lucide-react";
+import {  Menu} from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { useAuth0 } from "@auth0/auth0-react";
+import MobileNavLinks from "./MobileNavLinks";
 
 export default function MobileNav() {
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
     return (
         <Sheet>
             <SheetTrigger>
@@ -12,8 +15,15 @@ export default function MobileNav() {
             </SheetTrigger>
             <SheetContent className="space-y-3">
                 <SheetTitle>
-                    <span>Bienvenidos a AppITZFood.com</span>
+                    {isAuthenticated ? (
+                        <MobileNavLinks />
+                    
+                    ):(
 
+                   <Button onClick={() => loginWithRedirect()}
+                    className="flex-1 font-bold bg-orange-500">LogIn</Button>
+                        )   
+                }
                 </SheetTitle>
                 <Separator />
                 <SheetDescription className="flex">
